@@ -9,13 +9,21 @@ main() {
   if curl -fsS --max-time 2 "http://localhost:8000/api/health" >/dev/null 2>&1; then
     state="running"
   fi
-  printf "  backend api   : %s\n" "$( { [[ "$state" == "running" ]] && green running || red stopped; })"
+  if [[ "$state" == "running" ]]; then
+    printf "  backend api   : %s\n" "$(green running)"
+  else
+    printf "  backend api   : %s\n" "$(red stopped)"
+  fi
 
   local dstate="not installed"
   if command -v docker >/dev/null 2>&1; then
     if docker info >/dev/null 2>&1; then dstate="running"; else dstate="installed (stopped)"; fi
   fi
-  printf "  docker        : %s\n" "$( [[ "$dstate" == "running" ]] && green "$dstate" || yellow "$dstate" )"
+  if [[ "$dstate" == "running" ]]; then
+    printf "  docker        : %s\n" "$(green "$dstate")"
+  else
+    printf "  docker        : %s\n" "$(yellow "$dstate")"
+  fi
 
   echo
   printf "  git branch    : %s\n" "$(git branch --show-current 2>/dev/null || echo n/a)"

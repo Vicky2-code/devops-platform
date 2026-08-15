@@ -47,11 +47,15 @@ main() {
   # Try hitting the API first for a real job record.
   if api_up; then
     log_info "Backend detected at localhost:8000 — creating automation job."
-    curl -fsS -X POST "http://localhost:8000/api/jobs" \
+    if curl -fsS -X POST "http://localhost:8000/api/jobs" \
       -H "Content-Type: application/json" \
       -H "Authorization: Bearer $DEVFLOW_TOKEN" \
       -d "{\"name\":\"deploy-$target\",\"target_env\":\"$target\"}" \
-      >/dev/null 2>&1 && log_success "Job created." || log_warn "Could not create job (auth?)."
+      >/dev/null 2>&1; then
+      log_success "Job created."
+    else
+      log_warn "Could not create job (auth?)."
+    fi
   else
     log_warn "Backend not running — using local simulation."
     simulate_stage "clone repository" || exit 1
