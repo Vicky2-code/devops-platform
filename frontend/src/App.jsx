@@ -1,6 +1,5 @@
-import React from 'react'
-import { Navigate, Route, Routes, Link, useNavigate } from 'react-router-dom'
-import { api, getToken, clearToken } from './api.js'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { getToken, clearToken } from './api.js'
 import Login from './pages/Login.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Projects from './pages/Projects.jsx'

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { api } from '../api.js'
 
 export default function Health() {
   const [health, setHealth] = useState(null)
   const [user, setUser] = useState(null)
-  const [error, setError] = useState('')
 
   useEffect(() => {
     let alive = true
@@ -31,7 +30,6 @@ export default function Health() {
     <div>
       <h1>Health</h1>
       <p className="muted">Backend, database and auth status.</p>
-      {error && <div className="error">{error}</div>}
 
       <div className="stats">
         <div className={`stat ${health?.status === 'ok' ? 'green' : 'red'}`}>
