@@ -19,10 +19,16 @@ EMAIL="svigneshvicky229@gmail.com"
 
 cd "$(dirname "$0")/.."   # project root
 ROOT="$(pwd)"
+export ROOT
 
 echo "==> Ensuring git identity"
-git config user.name "$USERNAME" || true
-git config user.email "$EMAIL" || true
+if git config user.name >/dev/null 2>&1 && [[ "$(git config user.name)" == "$USERNAME" ]]; then
+  echo "    git identity already set for $USERNAME"
+else
+  echo "    setting git identity for $USERNAME"
+fi
+git config user.name "$USERNAME"
+git config user.email "$EMAIL"
 
 echo "==> Setting default branch to main"
 git branch -M main
