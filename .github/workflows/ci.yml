@@ -149,7 +149,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Container scan (backend)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE_NAME }}-backend:latest
           format: table
@@ -158,7 +158,7 @@ jobs:
           ignore-unfixed: true
 
       - name: Container scan (frontend)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE_NAME }}-frontend:latest
           format: table
