@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/vicky2-code/devops-cloud-automation-platform-backend:latest
+          image: ghcr.io/vicky2-code/devops-platform-backend:latest
           ports:
             - containerPort: 8000
               name: http

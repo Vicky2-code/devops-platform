@@ -8,6 +8,10 @@ variable "db_endpoint" {}
 variable "db_name" {}
 variable "db_username" {}
 variable "db_password" {}
+variable "region" {
+  type    = string
+  default = "us-east-1"
+}
 
 output "alb_dns" { value = aws_lb.main.dns_name }
 
@@ -149,7 +153,7 @@ resource "aws_ecs_task_definition" "backend" {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs.name
-          "awslogs-region"        = var.environment == "prod" ? "us-east-1" : "us-east-1"
+          "awslogs-region"        = var.region
           "awslogs-stream-prefix" = "backend"
         }
       }
@@ -181,7 +185,7 @@ resource "aws_ecs_task_definition" "frontend" {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.ecs.name
-          "awslogs-region"        = "us-east-1"
+          "awslogs-region"        = var.region
           "awslogs-stream-prefix" = "frontend"
         }
       }

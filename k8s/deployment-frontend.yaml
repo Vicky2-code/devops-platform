@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/vicky2-code/devops-cloud-automation-platform-frontend:latest
+          image: ghcr.io/vicky2-code/devops-platform-frontend:latest
           ports:
             - containerPort: 80
               name: http

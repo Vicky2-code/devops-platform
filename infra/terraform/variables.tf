@@ -42,13 +42,13 @@ variable "db_password" {
 }
 
 variable "backend_image" {
-  description = "Backend container image"
+  description = "Backend container image (pushed by CI to GHCR)"
   type        = string
-  default     = "ghcr.io/vicky2-code/devops-cloud-automation-platform-backend:latest"
+  default     = "ghcr.io/vicky2-code/devops-platform-backend:latest"
 }
 
 variable "frontend_image" {
-  description = "Frontend container image"
+  description = "Frontend container image (pushed by CI to GHCR)"
   type        = string
-  default     = "ghcr.io/vicky2-code/devops-cloud-automation-platform-frontend:latest"
+  default     = "ghcr.io/vicky2-code/devops-platform-frontend:latest"
 }

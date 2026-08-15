@@ -2,5 +2,5 @@
 region                       = "us-east-1"
 environment                  = "dev"
 db_password                  = "REPLACE_WITH_STRONG_PASSWORD"
-backend_image                = "ghcr.io/vicky2-code/devops-cloud-automation-platform-backend:latest"
-frontend_image               = "ghcr.io/vicky2-code/devops-cloud-automation-platform-frontend:latest"
+backend_image                = "ghcr.io/vicky2-code/devops-platform-backend:latest"
+frontend_image               = "ghcr.io/vicky2-code/devops-platform-frontend:latest"

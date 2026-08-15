@@ -21,6 +21,7 @@ module "database" {
 module "compute" {
   source         = "./modules/compute"
   environment    = var.environment
+  region         = var.region
   vpc_id         = module.networking.vpc_id
   public_subnets = module.networking.public_subnets
   backend_image  = var.backend_image
