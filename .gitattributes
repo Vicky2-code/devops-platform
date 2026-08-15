@@ -1,0 +1,11 @@
+# Normalize line endings: shell scripts and workflows must stay LF
+* text=auto
+
+*.sh text eol=lf
+*.bash text eol=lf
+docker-compose*.yml text eol=lf
+.github/workflows/*.yml text eol=lf
+k8s/*.yaml text eol=lf
+observability/**/*.yml text eol=lf
+infra/**/*.tf text eol=lf
+Makefile text eol=lf
