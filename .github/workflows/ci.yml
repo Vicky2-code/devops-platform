@@ -113,6 +113,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Normalize image name to lowercase
+        run: echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY@L}" >> "$GITHUB_ENV"
+
       - name: Cache docker layers
         uses: actions/cache@v4
         with:
