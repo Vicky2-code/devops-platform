@@ -2,6 +2,11 @@
 
 > **Temporary working name:** `devflow` (placeholder brand — easy to rename, see `docs/design/naming.md`).
 
+## Live repository
+
+- **GitHub:** https://github.com/Vicky2-code/devops-platform
+- **First release:** `v1.0.0`
+
 DevFlow is a full-stack DevOps automation platform that automates the repetitive work developers face when setting up projects, environments, containers, CI/CD pipelines, and deployments.
 
 It is built incrementally — from a Bash bootstrap tool to a SaaS-style platform — so every layer is real, tested, and deployed. Nothing here is stubbed.
