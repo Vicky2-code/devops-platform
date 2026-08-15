@@ -31,7 +31,7 @@ main() {
   fi
 
   # Reuse the init module's builders
-  # shellcheck source=./init.sh
+  # shellcheck disable=SC1091
   source "$SCRIPT_DIR/lib/commands/init.sh"
 
   if [[ -d "$project" ]]; then
