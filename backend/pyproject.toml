@@ -1,0 +1,12 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "I", "UP", "S"]
+ignore = ["B008"]  # Depends() in defaults is idiomatic FastAPI
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S105", "E402"]  # asserts + env setup in tests
+"app/config.py" = ["S105"]  # dev-only default secret key
+"app/schemas.py" = ["S105"]  # token_type is a JWT field, not a password

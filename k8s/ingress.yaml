@@ -1,0 +1,22 @@
+# Ingress — routes external traffic to the frontend (which proxies /api).
+# Requires an ingress controller (nginx-ingress / AWS Load Balancer Controller).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devflow-ingress
+  namespace: devflow
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  rules:
+    - host: devflow.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: devflow-frontend
+                port:
+                  number: 80

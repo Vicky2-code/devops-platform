@@ -1,0 +1,52 @@
+# need an npm lock-friendly repo: npm install at build time is fine for this project
+# but pinning via package-lock is better in CI; this block is handled by prerequisites.
+name: devflow
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: devflow
+      POSTGRES_PASSWORD: devflow
+      POSTGRES_DB: devflow
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devflow -d devflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - devflow-net
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql://devflow:devflow@db:5432/devflow
+      SECRET_KEY: ${SECRET_KEY:-devflow-insecure-dev-key-change-me}
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      ENVIRONMENT: development
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    networks:
+      - devflow-net
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - devflow-net
+
+volumes:
+  db_data:
+
+networks:
+  devflow-net:
+    driver: bridge

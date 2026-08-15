@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devflow-config
+  namespace: devflow
+data:
+  ENVIRONMENT: "production"
+  APP_NAME: "devflow"
+  CORS_ORIGINS: '["/"]'

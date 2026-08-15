@@ -1,0 +1,54 @@
+groups:
+  - name: devflow
+    rules:
+      # ---- availability ----
+      - alert: BackendDown
+        expr: up{job="devflow-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "DevFlow backend is unreachable"
+
+      # ---- request error rate (5xx ratio) ----
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_requests_total{status=~"5.."}[5m])) by (service)
+          / sum(rate(http_requests_total[5m])) by (service) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate on {{ $labels.service }}"
+
+      # ---- latency p99 ----
+      - alert: HighLatency
+        expr: |
+          histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
+          > 1.0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p99 latency above 1 second"
+
+      # ---- saturated deployments ----
+      - alert: DeploymentFailed
+        expr: |
+          increase(deployments_total{status="failed"}[5m]) > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "A deployment failed in the last 5 minutes"
+
+      # ---- resource utilisation (node/cadvisor metrics when available) ----
+      - alert: HighCPU
+        expr: |
+          rate(container_cpu_usage_seconds_total[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU utilisation detected"
+          description: "CPU usage above 80% for 10 minutes"

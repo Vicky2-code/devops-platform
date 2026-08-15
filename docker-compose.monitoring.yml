@@ -1,0 +1,51 @@
+# Observability stack — run with: docker compose -f docker-compose.monitoring.yml up -d
+name: devflow-monitoring
+services:
+  prometheus:
+    image: prom/prometheus:v2.53.2
+    volumes:
+      - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./observability/prometheus/alerts.yml:/etc/prometheus/alerts.yml
+      - prom_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - devflow-mon
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./observability/grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./observability/grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./observability/grafana/devflow-dashboard.json:/var/lib/grafana/dashboards/devflow-dashboard.json
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    networks:
+      - devflow-mon
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8080:8080"
+    privileged: true
+    networks:
+      - devflow-mon
+    depends_on:
+      - prometheus
+
+volumes:
+  prom_data:
+  grafana_data:
+
+networks:
+  devflow-mon:
+    driver: bridge

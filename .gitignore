@@ -1,0 +1,57 @@
+# -- Python --
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+
+# -- Node / frontend --
+node_modules/
+frontend/dist/
+frontend/build/
+*.log
+npm-debug.log*
+
+# -- Env / secrets --
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# -- Terraform --
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.*
+infra/terraform/crash.log
+infra/terraform/.terraform.lock.hcl
+*.tfvars
+!infra/terraform/terraform.tfvars.example
+
+# -- Kubernetes secrets applied locally --
+k8s/*.secret.yaml
+
+# -- OS / editor --
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# -- Docker --
+*.override.yml
+
+# -- misc project junk --
+NUL
+docs/daily/notes-cache/
